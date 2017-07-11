@@ -137,8 +137,9 @@ static int connect(lua_State *L){
 	as_config_init(&config);
 
 	// Add a seed host for cluster discovery.
-	config.hosts[0].addr = hostName;
-	config.hosts[0].port = port;
+	//config.hosts[0].addr = hostName;
+	//config.hosts[0].port = port;
+	as_config_add_host(&config, hostName, port);
 
 	// The Aerospike client instance, initialized with the configuration.
 	aerospike as;
@@ -172,7 +173,8 @@ static int get(lua_State *L){
 	as_record* rec = NULL;
 	as_key key;
 	as_error err;
-	as_key_init(&key, nameSpace, set, keyString);
+	//as_key_init(&key, nameSpace, set, keyString);
+	as_key_init_str(&key, nameSpace, set, keyString);
 
 	// Read the test record from the database.
 	aerospike_key_get(as, &err, NULL, &key, &rec);
